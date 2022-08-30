@@ -1,1 +1,1 @@
-Placeholder Readme file for cs224u
+Placeholder Readme file for CS224U

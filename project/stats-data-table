@@ -1,0 +1,131 @@
+improved tokenizer
+improved color representation
+
+First system
+a.random initial embeddings, embed_dim=50
+b.GRU encoder, unidirectional, one layer
+c.GRU decoder, unidirectional, one layer
+d. hidden_dim=50
+
+listener_accuracy: 0.7912467607255975
+bleu: 0.6586667273916903
+
+Second system
+a.Golve embeddings, embed_dim=50
+b.GRU encoder, unidirectional, one layer
+c.GRU decoder, unidirectional, one layer
+d. hidden_dim=50
+
+listener_accuracy: 0.7952778577598618
+bleu: 0.6600234778700497
+
+
+third system
+target color-addition for decoder
+a.Golve embeddings
+b.GRU encoder, unidirectional, 1 layer
+c.GRU decoder, unidirectional, 1 layer, input+target color
+d. hidden_dim=50
+listener_accuracy: 0.7912467607255975
+bleu: 0.6586667273916903
+
+
+Fourth system
+target color-addition for decoder
+a.Golve embeddings
+b.GRU encoder, unidirectional, 2 layer
+c.GRU decoder, unidirectional, 2 layer, input+target color
+d. hidden_dim=300
+listener_accuracy: 0.824647279009501
+bleu: 0.660157867462408
+
+Fifth System
+target color-addition for decoder
+a.Golve embeddings
+b.GRU encoder, bidirectional, 2 layer
+c.GRU decoder, unidirectional, 4 layer, input+target color
+d. hidden_dim=100
+listener_accuracy: 0.811402245896919
+bleu: 0.661482196999013
+
+Sixth System
+target color-addition for decoder
+a.Golve embeddings
+b.GRU encoder, bidirectional, 2 layer
+c.GRU decoder, bidirectional, 2 layer, input+target color
+d. hidden_dim=200
+listener_accuracy: 0.767060178520011
+bleu: 0.38923600929408
+
+Seventh System
+target color-addition for decoder
+a.Golve embeddings
+b.LSTM encoder, unidirectional, 1 layer
+c.LSTM decoder, unidirectional, 1 layer, input+target color
+d. hidden_dim=200
+listener_accuracy: 0.817160955945868
+bleu: 0.663823719621508
+
+
+Eighth System
+target color-addition for decoder
+a.Golve embeddings
+b.LSTM encoder, bidirectional, 3 layer
+c.LSTM decoder, unidirectional, 1 layer, input+target color
+d. hidden_dim=300
+listener_accuracy: 0.822631730492369
+bleu: 0.665097916485135
+
+
+Ninth System
+target color-addition for decoder
+a.Golve embeddings
+b.LSTM encoder, bidirectional, 2 layer
+c.LSTM decoder, bidirectional, 2 layer, input+target color
+d. hidden_dim=300
+listener_accuracy: 0.66887417218543
+bleu: 0.38923600929408
+
+Tenth System
+BERT based Encoder decoder (Bert2Bert)
+a. BERT tokenizer
+b. BERT encoder, max_length=512
+c. BERT decoder, max_length=512
+d. 
+
+Notebook shared!
+
+Preprocessing setup of SCC corpus to provide as input to BERT2BERT model for fine tuning is a challenging task. Able to accomplish it.
+
+On CPU, fine tuning estimated time more than 64 hours. So, stopped it.
+Many issues around Fine tuning on GPU for assigning token to GPU from CPU. More than Batch size=2 gave memory errors on CUDA after running for few initial iterations.
+It took around 4:15 hours for one epoch successful run on a Tesla K80 GPU machine.
+Mention - Step Training-loss validation-loss 
+	10000 0.024300 0.003473
+	20000 0.011600 0.000952
+	30000 0.000000 0.000414
+TrainOutput(global_step=37503, training_loss=0.01915386790031841, metrics={'train_runtime': 14001.1812, 'train_samples_per_second': 2.679, 'train_steps_per_second': 2.679, 'total_flos': 2.300636913030144e+16, 'train_loss': 0.01915386790031841, 'epoch': 1.0})	
+	
+Bleu score output gave result - 0.3528. Bleu score is calculated using SacreBLEU instead of NLTK Corpus-Bleu as used in LSTM or GRU based RNNs, NLTK and SacreBLEU use different tokenization rules.
+ 
+Could not integrate score of 'Listener accuracy' - somthing that work can be extended in future
+
+Notebook shared!
+
+
+
+Eleventh System - Train a multi modal Bert for Color Seq Prediction classification
+Mixing BERT with Numerical Features. Word_seqs used to provide as text input and color_seq[H, L, S] as numerical features.
+'eval_loss': 0.5749321657174606, 'eval_roc_auc': 0.6989578200453336, 'eval_threshold': 0.2661787271499634, 'eval_recall': 0.8709444844989185, 'eval_precision': 0.42565186751233264, 'eval_f1': 0.5718343195266272, 'eval_tn': 2372, 'eval_fp': 408, 'eval_fn': 923,
+'training loss': 0.56935546875
+Notebook shared!
+
+
+
+
+
+
+
+
+
+
